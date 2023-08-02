@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 20px;
+}
+
+h1 {
+    color: #007BFF;
+}
+
+button, input[type="submit"] {
+    background-color: #007BFF;
+    color: #FFF;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+input[type="text"], input[type="number"], select, input[type="date"], input[type="time"], input[type="file"] {
+    width: 300px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+}
+
+label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    margin: 5px;
+}
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário - Divulgar Saída de Barco</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Formulário para Divulgação de Saída de Barco</h1>
+    <form action="index.html" method="post" enctype="multipart/form-data">
+        <label for="nome_barco">Nome do Barco:</label>
+        <input type="text" id="nome_barco" name="nome_barco" required><br>
+
+        <label for="dia_saida">Dia da Saída:</label>
+        <input type="date" id="dia_saida" name="dia_saida" required><br>
+
+        <label for="horario_saida">Horário da Saída:</label>
+        <input type="time" id="horario_saida" name="horario_saida" required><br>
+
+        <label for="valor_passagem">Valor da Passagem:</label>
+        <input type="number" id="valor_passagem" name="valor_passagem" required><br>
+
+        <label for="dia_semana">Dia da Semana:</label>
+        <select id="dia_semana" name="dia_semana">
+            <option value="Segunda-feira">Segunda-feira</option>
+            <option value="Terça-feira">Terça-feira</option>
+            <option value="Quarta-feira">Quarta-feira</option>
+            <option value="Quinta-feira">Quinta-feira</option>
+            <option value="Sexta-feira">Sexta-feira</option>
+            <option value="Sábado">Sábado</option>
+            <option value="Domingo">Domingo</option>
+        </select><br>
+
+        <label for="imagem">Imagem do Barco:</label>
+        <input type="file" id="imagem" name="imagem"><br>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
+
