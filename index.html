@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Divulgação de Barcos</title>
+    <style>
+        /* Estilos CSS para melhorar a aparência */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Divulgação de Barcos</h1>
+
+    <form id="boatForm">
+        <label for="boatName">Nome do Barco:</label>
+        <input type="text" id="boatName" required>
+
+        <label for="departureDate">Dia da Saída:</label>
+        <input type="date" id="departureDate" required>
+
+        <label for="departureTime">Horário da Saída:</label>
+        <input type="time" id="departureTime" required>
+
+        <label for="ticketPrice">Preço da Passagem (em reais):</label>
+        <input type="number" id="ticketPrice" required>
+
+        <label for="collaboratorName">Nome do Colaborador:</label>
+        <input type="text" id="collaboratorName" required>
+
+        <label for="image">Imagem:</label>
+        <input type="file" id="image">
+
+        <button type="submit">Publicar</button>
+    </form>
+
+    <table>
+        <tr>
+            <th>Nome do Barco</th>
+            <th>Dia da Saída</th>
+            <th>Horário da Saída</th>
+            <th>Preço da Passagem</th>
+            <th>Nome do Colaborador</th>
+            <th>Imagem</th>
+            <th>Excluir</th>
+        </tr>
+        <tbody id="boatList">
+            <!-- As informações cadastradas serão exibidas aqui -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById("boatForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            // Obter valores dos campos de entrada
+            const boatName = document.getElementById("boatName").value;
+            const departureDate = document.getElementById("departureDate").value;
+            const departureTime = document.getElementById("departureTime").value;
+            const ticketPrice = document.getElementById("ticketPrice").value;
+            const collaboratorName = document.getElementById("collaboratorName").value;
+            const image = document.getElementById("image").files[0];
+
+            // Criar uma nova linha na tabela com as informações cadastradas
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${boatName}</td>
+                <td>${departureDate}</td>
+                <td>${departureTime}</td>
+                <td>${ticketPrice} R$</td>
+                <td>${collaboratorName}</td>
+                <td>${image ? `<img src="${URL.createObjectURL(image)}" alt="Imagem do Barco">` : ''}</td>
+                <td><button onclick="deleteRow(this)">Excluir</button></td>
+            `;
+
+            // Adicionar a nova linha à tabela
+            document.getElementById("boatList").appendChild(newRow);
+
+            // Limpar os campos do formulário após a publicação
+            document.getElementById("boatForm").reset();
+        });
+
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+</html>
