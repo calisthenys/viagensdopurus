@@ -1,109 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Divulgação de Barcos</title>
-    <style>
-        /* Estilos CSS para melhorar a aparência */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        form {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        img {
-            max-width: 100px;
-            max-height: 100px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publicação de Barcos</title>
+  <style>
+    /* Estilos básicos para a página */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+    .post {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-    <h1>Divulgação de Barcos</h1>
-
-    <form id="boatForm">
-        <label for="boatName">Nome do Barco:</label>
-        <input type="text" id="boatName" required>
-
-        <label for="departureDate">Dia da Saída:</label>
-        <input type="date" id="departureDate" required>
-
-        <label for="departureTime">Horário da Saída:</label>
-        <input type="time" id="departureTime" required>
-
-        <label for="ticketPrice">Preço da Passagem (em reais):</label>
-        <input type="number" id="ticketPrice" required>
-
-        <label for="collaboratorName">Nome do Colaborador:</label>
-        <input type="text" id="collaboratorName" required>
-
-        <label for="image">Imagem:</label>
-        <input type="file" id="image">
-
-        <button type="submit">Publicar</button>
+  <header>
+    <h1>Publicação de Barcos</h1>
+  </header>
+  <div class="container">
+    <!-- Área para criar novas publicações -->
+    <form id="post-form">
+      <h2>Nova Publicação</h2>
+      <label for="boat-name">Nome do Barco:</label>
+      <input type="text" id="boat-name" required>
+      <label for="departure-date">Dia da Saída:</label>
+      <input type="date" id="departure-date" required>
+      <label for="departure-time">Horário da Saída:</label>
+      <input type="time" id="departure-time" required>
+      <label for="ticket-price">Preço da Passagem (R$):</label>
+      <input type="number" id="ticket-price" step="0.01" required>
+      <label for="image-url">URL da Imagem:</label>
+      <input type="url" id="image-url">
+      <label for="collaborator-name">Nome do Colaborador:</label>
+      <input type="text" id="collaborator-name" required>
+      <button type="submit">Publicar</button>
     </form>
 
-    <table>
-        <tr>
-            <th>Nome do Barco</th>
-            <th>Dia da Saída</th>
-            <th>Horário da Saída</th>
-            <th>Preço da Passagem</th>
-            <th>Nome do Colaborador</th>
-            <th>Imagem</th>
-            <th>Excluir</th>
-        </tr>
-        <tbody id="boatList">
-            <!-- As informações cadastradas serão exibidas aqui -->
-        </tbody>
-    </table>
+    <!-- Área para exibir as publicações existentes -->
+    <div id="posts">
+      <h2>Publicações</h2>
+      <!-- Aqui serão adicionadas as publicações -->
+    </div>
+  </div>
 
-    <script>
-        document.getElementById("boatForm").addEventListener("submit", function(event) {
-            event.preventDefault();
+  <!-- Script para manipulação das publicações -->
+  <script>
+    const postForm = document.getElementById('post-form');
+    const postsContainer = document.getElementById('posts');
 
-            // Obter valores dos campos de entrada
-            const boatName = document.getElementById("boatName").value;
-            const departureDate = document.getElementById("departureDate").value;
-            const departureTime = document.getElementById("departureTime").value;
-            const ticketPrice = document.getElementById("ticketPrice").value;
-            const collaboratorName = document.getElementById("collaboratorName").value;
-            const image = document.getElementById("image").files[0];
+    postForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const boatName = document.getElementById('boat-name').value;
+      const departureDate = document.getElementById('departure-date').value;
+      const departureTime = document.getElementById('departure-time').value;
+      const ticketPrice = document.getElementById('ticket-price').value;
+      const imageUrl = document.getElementById('image-url').value;
+      const collaboratorName = document.getElementById('collaborator-name').value;
 
-            // Criar uma nova linha na tabela com as informações cadastradas
-            const newRow = document.createElement("tr");
-            newRow.innerHTML = `
-                <td>${boatName}</td>
-                <td>${departureDate}</td>
-                <td>${departureTime}</td>
-                <td>${ticketPrice} R$</td>
-                <td>${collaboratorName}</td>
-                <td>${image ? `<img src="${URL.createObjectURL(image)}" alt="Imagem do Barco">` : ''}</td>
-                <td><button onclick="deleteRow(this)">Excluir</button></td>
-            `;
+      const post = `
+        <div class="post">
+          <img src="${imageUrl}" alt="${boatName}" width="100%">
+          <h3>${boatName}</h3>
+          <p>Dia da Saída: ${departureDate}</p>
+          <p>Horário da Saída: ${departureTime}</p>
+          <p>Preço da Passagem: R$ ${ticketPrice}</p>
+          <p>Colaborador: ${collaboratorName}</p>
+          <button onclick="removePost(this)">Excluir</button>
+        </div>
+      `;
 
-            // Adicionar a nova linha à tabela
-            document.getElementById("boatList").appendChild(newRow);
+      postsContainer.insertAdjacentHTML('beforeend', post);
+      postForm.reset();
+    });
 
-            // Limpar os campos do formulário após a publicação
-            document.getElementById("boatForm").reset();
-        });
-
-        function deleteRow(button) {
-            const row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-    </script>
+    function removePost(button) {
+      button.parentElement.remove();
+    }
+  </script>
 </body>
 </html>
