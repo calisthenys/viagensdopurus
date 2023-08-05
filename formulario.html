@@ -1,40 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Formulário - Divulgar Saída de Barco</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viagem do Barco</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .information-list {
+            max-width: 500px;
+            margin: 20px auto;
+            list-style: none;
+            padding: 0;
+        }
+
+        .information-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Formulário para Divulgação de Saída de Barco</h1>
-    <form action="index.html" method="post" enctype="multipart/form-data">
-        <label for="nome_barco">Nome do Barco:</label>
-        <input type="text" id="nome_barco" name="nome_barco" required><br>
+    <div class="container">
+        <h1>Viagem do Barco</h1>
+        <div class="form-container">
+            <form id="informationForm">
+                <label for="boatName">Nome do Barco:</label>
+                <input type="text" id="boatName" required>
 
-        <label for="dia_saida">Dia da Saída:</label>
-        <input type="date" id="dia_saida" name="dia_saida" required><br>
+                <label for="departureDay">Dia da Saída:</label>
+                <select id="departureDay" required>
+                    <option value="" disabled selected>Selecione o dia da semana</option>
+                    <option value="Segunda-feira">Segunda-feira</option>
+                    <option value="Terça-feira">Terça-feira</option>
+                    <option value="Quarta-feira">Quarta-feira</option>
+                    <option value="Quinta-feira">Quinta-feira</option>
+                    <option value="Sexta-feira">Sexta-feira</option>
+                    <option value="Sábado">Sábado</option>
+                    <option value="Domingo">Domingo</option>
+                </select>
 
-        <label for="horario_saida">Horário da Saída:</label>
-        <input type="time" id="horario_saida" name="horario_saida" required><br>
+                <label for="departureTime">Horário de Saída:</label>
+                <input type="text" id="departureTime" required>
 
-        <label for="valor_passagem">Valor da Passagem:</label>
-        <input type="number" id="valor_passagem" name="valor_passagem" required><br>
+                <label for="ticketPrice">Preço da Passagem (em reais):</label>
+                <input type="number" id="ticketPrice" required>
 
-        <label for="dia_semana">Dia da Semana:</label>
-        <select id="dia_semana" name="dia_semana">
-            <option value="Segunda-feira">Segunda-feira</option>
-            <option value="Terça-feira">Terça-feira</option>
-            <option value="Quarta-feira">Quarta-feira</option>
-            <option value="Quinta-feira">Quinta-feira</option>
-            <option value="Sexta-feira">Sexta-feira</option>
-            <option value="Sábado">Sábado</option>
-            <option value="Domingo">Domingo</option>
-        </select><br>
+                <label for="collaboratorName">Nome do Colaborador da Informação:</label>
+                <input type="text" id="collaboratorName" required>
 
-        <label for="imagem">Imagem do Barco:</label>
-        <input type="file" id="imagem" name="imagem"><br>
+                <button type="submit">Anunciar Saída</button>
+            </form>
+        </div>
 
-        <input type="submit" value="Enviar">
-    </form>
+        <h2>Aqui Você pode Ver as Viagens dos Barcos</h2>
+        <ul class="information-list" id="informationList">
+            <!-- As informações serão inseridas aqui dinamicamente através do JavaScript -->
+        </ul>
+    </div>
+
+    <script>
+        const form = document.getElementById('informationForm');
+        const informationList = document.getElementById('informationList');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const boatName = document.getElementById('boatName').value;
+            const departureDay = document.getElementById('departureDay').value;
+            const departureTime = document.getElementById('departureTime').value;
+            const ticketPrice = document.getElementById('ticketPrice').value;
+            const collaboratorName = document.getElementById('collaboratorName').value;
+
+            const informationItem = document.createElement('li');
+            informationItem.className = 'information-item';
+
+            informationItem.innerHTML = `
+                <p><strong>Nome do Barco:</strong> ${boatName}</p>
+                <p><strong>Dia da Saída:</strong> ${departureDay}</p>
+                <p><strong>Horário de Saída:</strong> ${departureTime}</p>
+                <p><strong>Preço da Passagem:</strong> R$ ${ticketPrice}</p>
+                <p><strong>Colaborador:</strong> ${collaboratorName}</p>
+                <button class="delete-button" onclick="deleteInformation(this)">Excluir Informação</button>
+            `;
+
+            informationList.appendChild(informationItem);
+
+            form.reset();
+        });
+
+        function deleteInformation(button) {
+            const informationItem = button.parentElement;
+            informationList.removeChild(informationItem);
+        }
+    </script>
+    
 </body>
 </html>
-
